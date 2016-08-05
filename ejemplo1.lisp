@@ -3,6 +3,8 @@
 ; Febrero 7 de 2015
 ; Este archivo contiene funciones simples de manejo de listas
 
+(setq lista '(a b c))
+
 ; Recibe un lista y retorna un entero que corresponde al número de elementos en ella
 (defun size (lista)
     (cond ((null lista) 0)
@@ -58,14 +60,15 @@
 
 ;Contar cuantas veces aparece un elemento en una lista
 
-(defun contar (elem lista)
-  (if (equal (car lista) elem)
-      (+1 (contar elem (cdr lista)))
-      (+0 (contar elem (cdr lista)))
-    ) 
-
+(defun contar (elem lista n)
+  (cond ((null lista) n)
+        ((equal elem (car lista)) (contar elem (cdr lista) (+ n 1)))
+        (t (contar elem (cdr lista) n))
+        
+    )
   )
 
 ; Mezclar una lista con el reverso de otra [EN UNA SOLA LINEA]
-
-(defun )
+(defun superMerge (lista1 lista2)
+  (merge1 lista1 (inverse1 lista2)) 
+  )
