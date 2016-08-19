@@ -29,7 +29,7 @@
 ; Funciones que debe definir el usuario para establecer una estrategia de búsqueda
 ;------------------------------------------------
 (defun esObjetivo (vert)
- (equal vert 'a) 
+ (equal vert 'w) 
 )
 
 (defun selecFront (front)
@@ -41,7 +41,9 @@
 )
 
 (defun adicionarAFrontera (vecinos front)
-  (append vecinos front)
+  ;(append vecinos front)
+  (append front vecinos)
+
 )
 ;------------------------------------------------
 
@@ -96,4 +98,33 @@
 ; Cambiar el programa para que la búsqueda no se haga en profundidad sino en anchura
 ; Qué funciones se deberian cambiar para implementar el algoritmo A* a partir de este código?
 ; Qué funciones nuevas habría que construir para implementar el algoritmo A* a partir de este código?
+
+;Ejercicio
+(defun busqueda (graf front resp visit) 
+  ;(print front)
+  (cond ((null front) nil)
+        ((esObjetivo (selecFront front))(cons resp (list(selecFront front))))
+        (t (let ((x (selecFront front)))
+             (if (member x visit)
+                 (busqueda graf (nuevaFrontera (vecinos x graf) front visit) resp (cons x visit))
+                 (busqueda graf (nuevaFrontera (vecinos x graf) front visit) (append resp (list x)) (cons x visit))))))
+)
+
+;
+;(let ((x 19)
+;	  (y 21)
+;	  (z 2))
+;	(+ (* x y) z)
+;)
+
+;________________________________________________
+(defun CruceCj (lista1 lista2 resp1 resp2)
+	(let (( lenR (random (list-length lista1)) ))
+		(print lenR)
+		(append 
+			(cons (append (subseq lista1 0 lenR ) (nthcdr lenR lista2)) resp1)
+			(cons (append ( subseq lista2 0 lenR ) (nthcdr lenR lista1)) resp2)
+		)
+	)
+)
 

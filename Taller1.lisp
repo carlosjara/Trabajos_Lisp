@@ -13,7 +13,7 @@
 ;union de conjunto
 ;se asumen conjuntos
 (defun unionCj (lista1 lista2) 
-	(conjuntoCj (append lista1 lista2))
+	(conjuntoCj (append (conjuntoCj lista1) (conjuntoCj lista2)))
 )
 
 ;interseccion de conjuntos
