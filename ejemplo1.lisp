@@ -71,4 +71,17 @@
 ; Mezclar una lista con el reverso de otra [EN UNA SOLA LINEA]
 (defun superMerge (lista1 lista2)
   (merge1 lista1 (inverse1 lista2)) 
-  )
+)
+
+;Eliminar de una lista de n\'umeros entrelos todos los impares
+(defun ImparesEnt (lista1)
+	(cond ((null lista1) nil)
+		((=(mod (car lista1) 2) 1) (ImparesEnt (cdr lista1)))
+		(t (cons (car lista1) (ImparesEnt (cdr lista1))))
+	)
+)
+
+;Asumiendo size list1 = size list2
+(defun Ultimo (lista1 lista2 resp)
+		
+)
