@@ -15,7 +15,7 @@
 		;(print lenR)
 		(append 
 			(cons (append (subseq lista1 0 lenR ) (nthcdr lenR lista2)) resp1)
-			(cons (append ( subseq lista2 0 lenR ) (nthcdr lenR lista1)) resp2)
+			(cons (append (subseq lista2 0 lenR ) (nthcdr lenR lista1)) resp2)
 		)
 	)
 )
