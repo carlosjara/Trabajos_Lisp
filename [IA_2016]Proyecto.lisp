@@ -1,4 +1,4 @@
-;TallerPreParcial.lisp
+;[IA_2016]Proyecto.lisp
 ;Autor: C. Jaramillo
 ;Agosto 28 2016
 ;Proyecto final Inteligencia Artificial
