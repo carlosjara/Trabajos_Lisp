@@ -1,0 +1,78 @@
+;Comentarios proyecto P2
+
+;Ejemplo comentario
+;Lineadel 
+;objeto comentado Descripcion
+
+
+;9 Descripcion
+;implementacion de la red neuronal se tendran en cuenta los 
+;diferentes parametros utilizados en la primera tecnica
+
+;11 Parametros
+;@param : Apertura
+;@param : Cierre
+;@param : Porcentaje_Cambio_Precio
+;@param : Volumen
+;@param : Porcentaje_Cambio_Volumen
+
+;13 Funcion EscogerPrediccion
+;Determina de acuerod a las dos salidas del perceptron 
+;si el valor subirá o bajará
+
+;49 funcion sigmoide suma neuronas
+;Sigmoide_Suma_Ocultas
+;Pesos ((0 0 0 0 0) (0 0 0 0 0) (0 0 0 0 0) (0 0 0 0 0) (0 0 0 0 0) (0 0 0 0 0)) ~ (caar (crearPerceptroninicial '(2 4 6 8 10) 6 '(1 1)))
+;Pesos ((0 0 0 0 0 0) (0 0 0 0 0 0)) ~ (cadar (crearPerceptroninicial '(2 4 6 8 10) 6 '(1 1)))													
+;Entradas (1 4 1 0 4 9) ~ (caar (last (crearPerceptroninicial '(2 4 6 8 10) 6 '(1 1))))
+;Entradas (0.54 0.02 0.42 0.91 0.45 0.26) ~ (caadr (crearPerceptroninicial '(2 4 6 8 10) 6 '(1 1)))
+;Ocultas (0.4304538 0.49250054 0.4452208 0.4378235 0.28699982 0.49000132) ~ (caddr (propagacion '(2 4 6 8 10) 6 '(1 1)))
+;cantNeuronas (list-length PesosUnico)
+;contNeuronas (list-length Pesos)
+;(0.3681876 0.4950002 0.39651674 0.28699982 0.38936076 0.4353637)
+
+
+;Herramienta usada para hacer propagacion hacia adelante
+;AgregarOcultasActivadas 
+(defun AgregarCapasOcultas (perceptron)
+	(insertar-en (sigmoide_Suma_Neuronas (caar perceptron) (caar (last perceptron)) (caadr perceptron) (list-length (car (caar perceptron))) '()) perceptron (list-length perceptron))
+)
+;(agregarcapasocultas (crearperceptroninicial '(2 4 6 8 10) 6 '(1 1)))
+
+;AgregarSalidasActivadas
+(defun AgregarCapasSalida (perceptron)
+	(insertar-en (sigmoide_Suma_Neuronas (cadar perceptron) (caddr perceptron) (cadadr perceptron) (list-length (cadar perceptron)) '()) perceptron (list-length perceptron))
+)
+;(agregarcapasSalida(AgregarcapasOcultas (crearperceptroninicial '(1 2 3 4 5) 6 '(1 0))))
+
+
+;Aplica la funcion sigmoidal al resultado de la suma de las entradas por los pesos de la neurona a acticar
+(defun activarNeurona (PesosNeurona Entradas Bias NeuronasActivadas)
+	(insertar-en (append 
+						(list (Sumatoria PesosNeurona Entradas Bias))
+						(list (sigmoide (Sumatoria PesosNeurona Entradas Bias)))
+				  ) NeuronasActivadas (+(list-length NeuronasActivadas)1) 
+	)
+)
+;(activarneurona '(0 0 0 0 0) '(1 2 3 4 5) 0.3 '())
+
+
+;reemplazar valor
+(defun reemplazar-en (Elemento Pos Lista)
+	(append 
+			 (subseq Lista 0 (- pos 1))
+             (cons Elemento (nthcdr pos Lista))
+	)
+)
+
+
+
+;tomar elementos de una matriz
+(defun TomarElemento (matriz i j)
+	(nth (- j 1) (nth (- i 1) matriz))
+)
+
+;Linea Backpropagacion Salida
+;W_[unidadOculta,UnidadSalida] + nao * Error_[UnidadSalida](SalidaEsperada - SalidaPerceptron) * simoide_[UnidadSalida] * (1 - sigmoide_[UnidadSalida]) * SalidaUnidadOcula
+;W_[SalidaI,Salidaj] + 				nao * Error_[SalidaJ]	  (SalidaEsperada - SalidaJ) * 			 simoide_[SalidaJ] * 	  (1 - sigmoide_[SalidaJ]) * 		 SalidaI
+;----------
